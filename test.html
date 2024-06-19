@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <title>AR QR Code</title>
-    <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
-    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
   </head>
   <body style="margin: 0; overflow: hidden;">
     <a-scene embedded arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;">
@@ -17,7 +17,7 @@
       </a-entity>
     </a-scene>
     
-    <script>
+    <!-- <script>
       document.addEventListener("DOMContentLoaded", function() {
         navigator.geolocation.getCurrentPosition(function(position) {
           const latitude = position.coords.latitude;
@@ -26,6 +26,6 @@
           // Here you can use the latitude and longitude to place objects in a more complex way if needed
         });
       });
-    </script>
+    </script> -->
   </body>
 </html>
