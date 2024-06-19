@@ -5,27 +5,20 @@
     <title>AR QR Code</title>
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
+    <style>
+      body { margin: 0; overflow: hidden; }
+    </style>
   </head>
-  <body style="margin: 0; overflow: hidden;">
+  <body>
     <a-scene embedded arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;">
-      <!-- AR Camera -->
-      <a-entity camera></a-entity>
-      
-      <!-- Static Position for AR Object using the AR.js markerless tracking -->
-      <a-entity position="0 0 0">
-        <a-box color="red" depth="1" height="1" width="1" position="0 0.5 0"></a-box>
-      </a-entity>
+      <a-marker-camera preset="hiro"></a-marker-camera>
+
+      <!-- Static Position for AR Object -->
+      <a-box color="red" depth="1" height="1" width="1" position="0 0.5 0"></a-box>
     </a-scene>
     
-    <!-- <script>
-      document.addEventListener("DOMContentLoaded", function() {
-        navigator.geolocation.getCurrentPosition(function(position) {
-          const latitude = position.coords.latitude;
-          const longitude = position.coords.longitude;
-          console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
-          // Here you can use the latitude and longitude to place objects in a more complex way if needed
-        });
-      });
-    </script> -->
+    <script>
+      console.log("A-Frame and AR.js scripts loaded");
+    </script>
   </body>
 </html>
