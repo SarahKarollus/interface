@@ -1,26 +1,74 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AR QR Code</title>
-    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
+    <meta charset="utf-8">
+    <title>AR Web App with A-Frame and AR.js</title>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script> <!-- A-Frame Framework -->
+    <script src="https://cdn.jsdelivr.net/npm/ar.js/aframe/build/aframe-ar.js"></script> <!-- AR.js Component for A-Frame -->
+    <!-- Optional: QR Code Scanner library -->
+    <script src="https://cdn.jsdelivr.net/npm/jsqr/dist/jsQR.min.js"></script> <!-- JSQR for QR code scanning -->
+    <!-- Optional: QuaggaJS for QR code scanning -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/quagga"></script> -->
+
     <style>
-        body { margin: 0; overflow: hidden; }
+        /* Optional: CSS styles */
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+        #scanner-video {
+            display: none; /* Hide video element used for QR code scanning */
+        }
     </style>
 </head>
 <body>
-    <a-scene embedded arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3; patternRatio: 0.5;">
-        <!-- Hier wird der Marker verwendet -->
-        <a-marker-camera preset="hiro"></a-marker-camera>
-
-        <!-- Statisch positionierter AR-Gegenstand -->
-        <a-box color="red" depth="1" height="1" width="1" position="0 0.5 0"></a-box>
-    </a-scene>
-
+    <video id="scanner-video"></video> <!-- Video element for QR code scanning (hidden) -->
     <script>
-        console.log("A-Frame and AR.js scripts loaded");
+        // Optional: QR Code Scanner function using JSQR library
+        async function scanQRCodeFromVideo(videoElement) {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = videoElement.videoWidth;
+            canvas.height = videoElement.videoHeight;
+            ctx.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const code = jsQR(imageData.data, imageData.width, imageData.height, {
+                inversionAttempts: 'dontInvert',
+            });
+            return code ? code.data : null;
+        }
+
+        // Handle QR Code scanning result
+        function handleQRCodeScan(result) {
+            if (result) {
+                // Activate AR scene based on the scanned QR code
+                const scene = document.querySelector('a-scene');
+                scene.setAttribute('arjs', 'sourceType: webcam; debugUIEnabled: false;');
+            } else {
+                alert('QR-Code nicht erkannt oder ungültig.');
+            }
+        }
+
+        // Optional: Start scanning QR codes when the video element is ready
+        document.getElementById('scanner-video').addEventListener('loadedmetadata', async () => {
+            try {
+                const qrCodeData = await scanQRCodeFromVideo(document.getElementById('scanner-video'));
+                handleQRCodeScan(qrCodeData);
+            } catch (error) {
+                console.error('Error scanning QR code:', error);
+            }
+        });
     </script>
+
+    <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;">
+        <!-- Marker definition -->
+        <a-marker preset="hiro">
+            <!-- AR content to display when the marker is detected -->
+            <a-box position="0 0.5 0" material="color: red;"></a-box>
+        </a-marker>
+
+        <!-- Optional: Add camera entity for AR view -->
+        <a-entity camera></a-entity>
+    </a-scene>
 </body>
 </html>
