@@ -74,19 +74,15 @@
     <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;">
         <!-- Marker 1 -->
         <a-marker type="pattern" url="Marker/pattern-Marker 1.patt">
-            <a-asset-item id="tree-obj" src="/statue_1.obj"></a-asset-item>
-            <a-asset-item id="tree-mtl" src="/statue_1.mtl"></a-asset-item>
+            <!-- Hier füge das 3D-Objekt ein -->
+            <a-entity obj-model="obj: url(models/statue_1.obj); mtl: url(models/statue_1.mtl)"
+                      position="0 0.5 0"
+                      scale="0.05 0.05 0.05">
+            </a-entity>
         </a-marker>
 
-        <!-- Marker 2 -->
-        <a-marker type="pattern" url="Marker/pattern-Marker 2.patt">
-            <a-sphere position="0 0.5 0" radius="0.5" material="color: green;"></a-sphere>
-        </a-marker>
-
-        <!-- Marker 3 -->
-        <a-marker type="pattern" url="Marker/pattern-Marker 3.patt">
-            <a-cylinder position="0 0.5 0" radius="0.25" height="1" material="color: blue;"></a-cylinder>
-        </a-marker>
+        
+        
 
         <!-- Optional: Add camera entity for AR view -->
         <a-entity camera></a-entity>
