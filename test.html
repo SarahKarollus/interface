@@ -7,8 +7,6 @@
     <script src="https://cdn.jsdelivr.net/npm/ar.js/aframe/build/aframe-ar.js"></script> <!-- AR.js Component for A-Frame -->
     <!-- Optional: QR Code Scanner library -->
     <script src="https://cdn.jsdelivr.net/npm/jsqr/dist/jsQR.min.js"></script> <!-- JSQR for QR code scanning -->
-    <!-- Optional: QuaggaJS for QR code scanning -->
-    <!-- <script src="https://cdn.jsdelivr.net/npm/quagga"></script> -->
 
     <style>
         /* Optional: CSS styles */
@@ -22,41 +20,53 @@
     </style>
 </head>
 <body>
-    <video id="scanner-video"></video> <!-- Video element for QR code scanning (hidden) -->
+    <video id="scanner-video" autoplay></video> <!-- Video element for QR code scanning -->
     <script>
-        // Optional: QR Code Scanner function using JSQR library
+        async function startQRCodeScanner(videoElement) {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+                videoElement.srcObject = stream;
+            } catch (error) {
+                console.error('Error accessing camera:', error);
+            }
+        }
+
         async function scanQRCodeFromVideo(videoElement) {
             const canvas = document.createElement('canvas');
             const ctx = canvas.getContext('2d');
             canvas.width = videoElement.videoWidth;
             canvas.height = videoElement.videoHeight;
-            ctx.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
-            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-            const code = jsQR(imageData.data, imageData.width, imageData.height, {
-                inversionAttempts: 'dontInvert',
+
+            return new Promise((resolve) => {
+                const interval = setInterval(() => {
+                    ctx.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+                    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                    const code = jsQR(imageData.data, imageData.width, imageData.height, {
+                        inversionAttempts: 'dontInvert',
+                    });
+                    if (code) {
+                        clearInterval(interval);
+                        resolve(code.data);
+                    }
+                }, 1000); // Scan every second
             });
-            return code ? code.data : null;
         }
 
-        // Handle QR Code scanning result
         function handleQRCodeScan(result) {
             if (result) {
-                // Activate AR scene based on the scanned QR code
                 const scene = document.querySelector('a-scene');
                 scene.setAttribute('arjs', 'sourceType: webcam; debugUIEnabled: false;');
+                alert('QR-Code erkannt: ' + result);
             } else {
                 alert('QR-Code nicht erkannt oder ungültig.');
             }
         }
 
-        // Optional: Start scanning QR codes when the video element is ready
-        document.getElementById('scanner-video').addEventListener('loadedmetadata', async () => {
-            try {
-                const qrCodeData = await scanQRCodeFromVideo(document.getElementById('scanner-video'));
-                handleQRCodeScan(qrCodeData);
-            } catch (error) {
-                console.error('Error scanning QR code:', error);
-            }
+        document.addEventListener('DOMContentLoaded', async () => {
+            const videoElement = document.getElementById('scanner-video');
+            await startQRCodeScanner(videoElement);
+            const qrCodeData = await scanQRCodeFromVideo(videoElement);
+            handleQRCodeScan(qrCodeData);
         });
     </script>
 
