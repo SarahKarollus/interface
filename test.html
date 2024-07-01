@@ -11,7 +11,6 @@
     <!-- Optional: QR-Code Scanner Bibliothek -->
     <script src="https://cdn.jsdelivr.net/npm/jsqr/dist/jsQR.min.js"></script>
 
-
     <style>
         /* CSS styles */
         body {
@@ -21,15 +20,38 @@
         #scanner-video {
             display: none; /* Versteckt das Videoelement, das für das Scannen von QR-Codes verwendet wird */
         }
+        #popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            z-index: 1000;
+        }
+        #popup button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin-top: 20px;
+            cursor: pointer;
+        }
     </style>
-
 </head>
 
-
-
 <body>
+    <div id="popup">
+        <p>Willkommen zur AR Web App! Drücken Sie "Los geht's", um fortzufahren.</p>
+        <button onclick="startApp()">Los geht's</button>
+    </div>
+
     <!-- Videoelement für das Scannen von QR-Codes -->
     <video id="scanner-video" autoplay></video>
+    
     <script>
         // Funktion zum Starten des QR-Code Scanners
         async function startQRCodeScanner(videoElement) {
@@ -64,8 +86,9 @@
                 }, 1000); // Scannt jede Sekunde
             });
         }
- // Funktion zum Verarbeiten des gescannten QR-Codes
- function handleQRCodeScan(result) {
+
+        // Funktion zum Verarbeiten des gescannten QR-Codes
+        function handleQRCodeScan(result) {
             if (result) {
                 const scene = document.querySelector('a-scene'); // Holen der A-Frame Szene
                 scene.setAttribute('arjs', 'sourceType: webcam; debugUIEnabled: false;'); // Setzen der AR.js Attribute
@@ -75,18 +98,17 @@
             }
         }
 
-        // Event-Listener, der ausgeführt wird, wenn die Seite geladen ist
-        document.addEventListener('DOMContentLoaded', async () => {
+        // Funktion zum Starten der App
+        async function startApp() {
+            document.getElementById('popup').style.display = 'none'; // Versteckt das Popup
             const videoElement = document.getElementById('scanner-video'); // Holen des Videoelements
             await startQRCodeScanner(videoElement); // Startet den QR-Code Scanner
             const qrCodeData = await scanQRCodeFromVideo(videoElement); // Scannt den QR-Code
             handleQRCodeScan(qrCodeData); // Verarbeitet das Ergebnis des Scans
-        });
+        }
     </script>
 
-
-     <!-- A-Frame Szene für Augmented Reality -->
-
+    <!-- A-Frame Szene für Augmented Reality -->
     <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;">
         <a-marker type="pattern" url="Marker/pattern-plus.patt">
             <!-- 3D-Modell für Marker 1 -->
@@ -114,9 +136,7 @@
                       scale="0.005 0.005 0.005">
             </a-entity>
         </a-marker> 
-       
         
-
         <!-- Kamera für AR-Ansicht -->
         <a-entity camera></a-entity>
     </a-scene>
