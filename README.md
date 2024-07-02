@@ -1,14 +1,16 @@
 # interface
 
-<h1>Funktioniert</h1>
-<h3>Statue 1 Funktioniert</h3>
-<h3>Statue 2 Funktioniert</h3>
-<h3>Statue 3 Funktioniert</h3> 
-<h3>Marker ausgedruckt</h3>
-<h3>Video Erstellen</h3>
-<h3>Teaserbild Collage</h3>
+<h2>Funktioniert</h2>
+<li>
+<lu>Statue 1 Funktioniert</lu>
+<lu>Statue 2 Funktioniert</lu>
+<lu>Statue 3 Funktioniert</lu> 
+<lu>Marker ausgedruckt</lu>
+<lu>Video Erstellen</lu>
+<lu>Teaserbild Collage</lu>
+</li>
 
-<h1>To Do</h1>
+<h2>To Do</h2>
 <li>
   <lu>Eindeutigere Marker</lu>
   <lu>Eventuell Audio-Guide</lu>
