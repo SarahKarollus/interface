@@ -2,7 +2,7 @@
 
 <h2>Funktioniert</h2>
 <li>
-  <lu>Statue 1 Funktioniert</lu>
+  <lu>Statue 1 Funktioniert</lu> <br>
   <lu>Statue 2 Funktioniert</lu>
   <lu>Statue 3 Funktioniert</lu> 
   <lu>Marker ausgedruckt</lu>
