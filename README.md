@@ -1,6 +1,6 @@
 # interface
 
-<h2>Funktioniert</h2>
+<h2>Erledigt</h2>
 <ul>
   <li>Statue 1 Funktioniert</li>
   <li>Statue 2 Funktioniert</li>
@@ -11,6 +11,8 @@
 </ul>
 
 <h2>To Do</h2>
+
+<h2>Nice to have</h2>
 <ul>
   <li>Eindeutigere Marker</li>
   <li>Eventuell Audio-Guide</li>
