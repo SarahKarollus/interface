@@ -2,26 +2,37 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>AR Web App with A-Frame and AR.js</title>
+    <title>AR Museums Web-App</title>
+    <!-- Verknüpft die externe CSS-Datei für das Styling -->
     <link rel="stylesheet" href="style.css">
+    <!-- Einbindung der A-Frame-Bibliothek für WebVR/WebAR -->
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <!-- Einbindung der AR.js-Bibliothek für Augmented Reality Funktionen -->
     <script src="https://cdn.jsdelivr.net/npm/ar.js/aframe/build/aframe-ar.js"></script>
+    <!-- Einbindung der jsQR-Bibliothek zum Scannen von QR-Codes -->
     <script src="https://cdn.jsdelivr.net/npm/jsqr/dist/jsQR.min.js"></script>
 </head>
 <body>
+    <!-- Pop-up Fenster, das beim Laden der Seite angezeigt wird -->
     <div id="popup">
         <p>Willkommen zum AR-Museum!.</p>
+        <!-- Button, der die Anwendung startet -->
         <button onclick="startApp()">Los geht's</button>
     </div>
+    <!-- Videotag zur Darstellung des Kamerabildes -->
     <video id="scanner-video" autoplay></video>
+    <!-- A-Frame Szene für die Augmented Reality -->
     <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;">
+        <!-- Definiert einen AR-Marker und das darauf zu ladende 3D-Modell -->
         <a-marker type="pattern" url="Marker/pattern-plus.patt">
+            <!-- Einbindung des 3D-Modells und dessen Eigenschaften (Position, Rotation, Skalierung) -->
             <a-entity obj-model="obj: url(Models/Model 1/statue_1.obj); mtl: url(Models/Model 1/statue_1.mtl)"
                       position="0 0 0" 
                       rotation="270 0 0" 
                       scale="0.01 0.01 0.01">
             </a-entity>
         </a-marker>
+        <!-- Weitere AR-Marker mit unterschiedlichen Mustern und 3D-Modellen -->
         <a-marker type="pattern" url="Marker/pattern-flagge.patt">
             <a-entity obj-model="obj: url(Models/model 2/statue_2.obj); mtl: url(Models/model 2/statue_2.mtl)"
                       position="0 0 0" 
@@ -36,8 +47,11 @@
                       scale="0.002 0.002 0.002">
             </a-entity>
         </a-marker>
+        <!-- Kamera-Entity für die AR-Szene -->
         <a-entity camera></a-entity>
     </a-scene>
+    <!-- Verknüpft die externe JavaScript-Datei für zusätzliche Funktionen -->
     <script src="script.js"></script>
 </body>
 </html>
+
