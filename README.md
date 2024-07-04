@@ -11,9 +11,10 @@
 </ul>
 
 <h2>To Do</h2>
-
+<ul>
+  <li>Eventuell Audio-Guide</li>
+</ul>
 <h2>Nice to have</h2>
 <ul>
   <li>Eindeutigere Marker</li>
-  <li>Eventuell Audio-Guide</li>
 </ul>
