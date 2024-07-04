@@ -12,7 +12,7 @@
 
 <h2>To Do</h2>
 <ul>
-  <li>Eventuell Audio-Guide</li>
+  <li>Audio-Guide</li>
 </ul>
 <h2>Nice to have</h2>
 <ul>
